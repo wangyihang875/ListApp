@@ -4,7 +4,7 @@ import {observable} from 'mobx';
 import {observer} from 'mobx-react/native';
 
 class Todo {
-    id = `todo_${Date.now()}${Math.floor(Math.random()*10)}`;
+    id = Date.now();
 
     @observable
     title = '';
@@ -27,8 +27,9 @@ class TodoItem extends Component {
     }
 
     changeStatus = () => {
-        const {data} = this.props;
+        const {data,itemNo,store} = this.props;
         data.done = !data.done;
+        store.itemSort(itemNo)
     };
 
     remove = () => {
@@ -72,7 +73,7 @@ class NewItem extends Component {
 
     addItem() {
         if (this.state.newItem === '') return
-        this.props.store.addItem(this.props.item, new Todo(this.state.newItem))
+        this.props.store.addItem(this.props.item.index, new Todo(this.state.newItem))
         this.setState({
             newItem: ''
         })

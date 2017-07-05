@@ -18,10 +18,10 @@ class ObservableQDListStore {
         })
     }
 
-    addItem(item, todo) {
+    addItem(itemNo, todo) {
         this.QDList.forEach((l) => {
-            if (l.index === item.index) {
-                l.items.push(todo)
+            if (l.index === itemNo) {
+                l.items.unshift(todo)
             }
         })
     }
@@ -37,7 +37,36 @@ class ObservableQDListStore {
         })
     }
 
+    itemSort(itemNo){
+        let done = [];
+        let undone = [];
+        this.QDList.forEach((l,i) => {
+            if (l.index === itemNo) {
 
+                for(let j=0;j<this.QDList[i].items.length;j++){
+                    if(this.QDList[i].items[j].done){
+                        done.push(this.QDList[i].items[j])
+                        done.sort(this.compare('id'))
+
+                    }else{
+                        undone.push(this.QDList[i].items[j])
+                        undone.sort(this.compare('id'))
+                    }
+                }
+                this.QDList[i].items = undone.concat(done);
+
+
+            }
+        })
+    }
+
+    compare(property){
+        return function(a,b){
+            var value1 = a[property];
+            var value2 = b[property];
+            return value1 - value2;
+        }
+    }
 
 }
 

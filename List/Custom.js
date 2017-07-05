@@ -19,8 +19,8 @@ class TodoList extends Component {
 
     addListItem() {
         var name = this.state.text;
-        var listItemNo = `item_${Date.now()}${Math.floor(Math.random() * 10)}`;
-        var createDate = `${Date.now()}`;
+        var listItemNo = Date.now();
+        var createDate = Date.now();
         this.props.store.addListItem(name, listItemNo, createDate);
         this.setState({
             text: '',
@@ -53,7 +53,7 @@ class TodoList extends Component {
         return (
             <View style={{flex:1,backgroundColor:'#ffffff'}}>
                 <View style={styles.heading}>
-                    <Text style={styles.headingText}>自定义清单</Text>
+                    <Text style={styles.headingText}>日常清单</Text>
                 </View>
                 {!QDList.length ? <NoList /> : null}
                 <ScrollView style={{flex:1}}>
