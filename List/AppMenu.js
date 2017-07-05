@@ -28,13 +28,13 @@ export default class AppMenu extends Component {
 
                 <TouchableOpacity style={styles.btnView} onPress={() => this.props.onItemSelected('Default')}>
                     <Text style={styles.btn}>
-                        默认清单
+                        收集箱
                     </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.btnView} onPress={() => this.props.onItemSelected('Custom')}>
                     <Text style={styles.btn}>
-                        自定义清单
+                        日常清单
                     </Text>
                 </TouchableOpacity>
 
@@ -46,40 +46,9 @@ export default class AppMenu extends Component {
 
                 <View style={[styles.btnView,{borderBottomWidth:0}]}>
                     <Text style={styles.btn}>
-                        固定清单
+                        流程清单
                     </Text>
                 </View>
-
-                <TouchableOpacity style={styles.itemView}>
-                    <Text
-                        style={styles.item}>
-                        沙龙 2017.07.15
-                    </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.itemView}>
-                    <Text
-                        style={styles.item}>
-                        店内会 2017.07.01
-                    </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.itemView}>
-                    <Text
-                        style={styles.item}>
-                        学习会 2017.06.29
-                    </Text>
-                </TouchableOpacity>
-
-
-                <TouchableOpacity style={styles.itemView}>
-                    <Text
-                        style={styles.item}>
-                        店内会 2017.06.05
-                    </Text>
-                </TouchableOpacity>
-
-
 
             </ScrollView>
         );
