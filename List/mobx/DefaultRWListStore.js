@@ -1,6 +1,6 @@
 import {observable} from 'mobx'
 
-export default class ObservableRWListStore {
+class DefaultRWListStore {
     @observable RWList = []
 
     addItem(todo) {
@@ -40,4 +40,7 @@ export default class ObservableRWListStore {
 
 }
 
+
+const defaultRWListStore = new DefaultRWListStore()
+export default defaultRWListStore
                         

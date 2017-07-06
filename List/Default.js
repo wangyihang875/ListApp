@@ -2,22 +2,7 @@ import React, {PropTypes, Component} from 'react'
 import {View, Text, StyleSheet, TextInput, TouchableHighlight, TouchableOpacity, ScrollView,Alert} from 'react-native'
 import {observable} from 'mobx';
 import {observer} from 'mobx-react/native';
-
-class Todo {
-    id = Date.now();
-
-    createDate = Date.now();
-
-    @observable
-    title = '';
-
-    @observable
-    done = false;
-
-    constructor(title) {
-        this.title = title;
-    }
-}
+import  Todo from './mobx/TodoStore';
 
 @observer
 class TodoItem extends Component {

@@ -16,7 +16,7 @@ import Custom from './Custom';
 import Default from './Default';
 import AppMenu from './AppMenu'
 import QDListStore from './mobx/QDListStore'
-import RWListStore from './mobx/RWListStore'
+import DefaultRWListStore from './mobx/DefaultRWListStore'
 import SideMenu from 'react-native-side-menu'
 import Welcome from '../Welcome'
 
@@ -38,7 +38,7 @@ export default class MenuController extends Component {
                 return <Custom store={QDListStore} navigator={this.props.navigator}/>
                 break;
             case 'Default' :
-                return <Default store={RWListStore} navigator={this.props.navigator}/>
+                return <Default store={DefaultRWListStore} navigator={this.props.navigator}/>
                 break;
             case 'Welcome' :
                 return <Welcome/>

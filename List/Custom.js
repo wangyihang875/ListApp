@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
-import {View, Text, TextInput, TouchableHighlight, ScrollView, StyleSheet} from 'react-native'
+import {View, Text, TextInput, TouchableHighlight, ScrollView, StyleSheet,Alert} from 'react-native'
 import {observer} from 'mobx-react/native'
 import NewItem from './NewItem'
+import ObservableRWListStore from './mobx/RWListStore';
 
 @observer
 class TodoList extends Component {
@@ -21,7 +22,7 @@ class TodoList extends Component {
         var name = this.state.text;
         var listItemNo = Date.now();
         var createDate = Date.now();
-        this.props.store.addListItem(name, listItemNo, createDate);
+        this.props.store.addListItemUseStore(name,new ObservableRWListStore(),listItemNo, createDate);
         this.setState({
             text: '',
             showInput: !this.state.showInput
@@ -29,7 +30,16 @@ class TodoList extends Component {
     }
 
     removeListItem(listItem) {
-        this.props.store.removeListItem(listItem)
+        Alert.alert(
+            '提示',
+            '确定要删除 '+listItem.name+' 吗？',
+            [
+                {text: '取消', onPress: () => {return false}},
+                {text: '删除', onPress: () => this.props.store.removeListItem(listItem)},
+            ],
+            { cancelable: true }
+        )
+
     }
 
     updateText(text) {
@@ -42,7 +52,8 @@ class TodoList extends Component {
             type: 'Modal',
             params: {
                 item,
-                store: this.props.store
+                store: this.props.store,
+                RWListStore:item.items
             }
         })
     }

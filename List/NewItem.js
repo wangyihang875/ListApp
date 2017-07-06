@@ -1,60 +1,63 @@
 import React, {PropTypes, Component} from 'react'
-import {View, Text, StyleSheet, TextInput, TouchableHighlight, TouchableOpacity, ScrollView,Alert} from 'react-native'
+import {View, Text, StyleSheet, TextInput, TouchableHighlight, TouchableOpacity, ScrollView,Alert,Image} from 'react-native'
 import {observable} from 'mobx';
 import {observer} from 'mobx-react/native';
-
-class Todo {
-    id = Date.now();
-
-    @observable
-    title = '';
-
-    @observable
-    done = false;
-
-    constructor(title) {
-        this.title = title;
-    }
-}
+import ItemDetail from './ItemDetail';
+import Todo from './mobx/TodoStore'
 
 @observer
 class TodoItem extends Component {
     static propTypes = {
-        data: PropTypes.instanceOf(Todo),
+        todo: PropTypes.instanceOf(Todo),
     };
     constructor(props) {
         super(props);
     }
 
     changeStatus = () => {
-        const {data,itemNo,store} = this.props;
-        data.done = !data.done;
-        store.itemSort(itemNo)
+        const {todo,RWListStore} = this.props;
+        todo.done = !todo.done;
+        RWListStore.itemSort();
     };
 
+    forDetail = () => {
+        const {todo,RWListStore,listName} = this.props;
+        this.props.navigator.push({
+            component: ItemDetail,
+            type: 'Modal',
+            params: {
+                todo,
+                listName,
+                RWListStore:RWListStore
+            }
+        })
+    }
+
     remove = () => {
-        const {data,itemNo,store} = this.props;
+        const {todo,RWListStore} = this.props;
         Alert.alert(
             '提示',
             '确定要删除吗？',
             [
                 {text: '取消', onPress: () => {return false}},
-                {text: '删除', onPress: () => store.removeItem(itemNo,data.id)},
+                {text: '删除', onPress: () => RWListStore.removeItem(todo.id)},
             ],
             { cancelable: true }
         )
     }
 
     render() {
-        const {data} = this.props;
+        const {todo} = this.props;
+        var imgSrc = todo.done?require('./images/done.png'):require('./images/undone.png')
         return (
-            <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+            <View style={{flexDirection:'row',alignItems:'center',paddingHorizontal:10}}>
+                <TouchableOpacity onPress={this.changeStatus} style={{marginLeft:10}}><Image source={imgSrc} style={{width:20,height:20}}/></TouchableOpacity>
                 <Text
-                    style={[styles.item, data.done && styles.done]}
-                    onPress={this.changeStatus}
+                    style={[styles.item, todo.done && styles.done]}
+                    onPress={this.forDetail}
                     onLongPress={this.remove}
                 >
-                    • {data.title}
+                     {todo.title}
                 </Text>
             </View>
 
@@ -63,7 +66,7 @@ class TodoItem extends Component {
 }
 
 @observer
-class NewItem extends Component {
+export default class NewItem extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -73,7 +76,7 @@ class NewItem extends Component {
 
     addItem() {
         if (this.state.newItem === '') return
-        this.props.store.addItem(this.props.item.index, new Todo(this.state.newItem))
+        this.props.RWListStore.addItem(new Todo(this.state.newItem));
         this.setState({
             newItem: ''
         })
@@ -86,7 +89,8 @@ class NewItem extends Component {
     }
 
     render() {
-        const {item,store} = this.props
+        const {item,RWListStore,navigator} = this.props;
+        const {RWList} = this.props.RWListStore;
         return (
             <View style={{flex: 1,backgroundColor:'#ffffff'}}>
                 <View style={styles.heading}>
@@ -95,8 +99,8 @@ class NewItem extends Component {
                         onPress={this.props.navigator.pop}
                         style={styles.closeButton}>&times;</Text>
                 </View>
-                {!item.items.length && <NoItems />}
-                {item.items.length ? <Items items={item.items} itemNo={item.index} store={store}/> : <View />}
+                {!RWList.length && <NoItems />}
+                {RWList.length ? <Items items={RWList} RWListStore={RWListStore} navigator={navigator} listName={item.name}/> : <View />}
                 <View style={{flexDirection: 'row'}}>
                     <TextInput
                         value={this.state.newItem}
@@ -118,12 +122,12 @@ const NoItems = () => (
         <Text style={styles.noItemText}>还没有任务,点击按钮添加</Text>
     </View>
 )
-const Items = ({items,itemNo,store}) => (
+
+const Items = ({items,store,RWListStore,navigator,listName}) => (
     <ScrollView style={{flex: 1, paddingTop: 10}}>
         {items.map((todo, i) => {
-            {/*return <TouchableOpacity><Text style={styles.item} key={i}>• {item}</Text></TouchableOpacity>*/
-            }
-            return <TodoItem key={i} data={todo} itemNo={itemNo} store={store}/>
+
+            return <TodoItem key={i} todo={todo} RWListStore={RWListStore} navigator={navigator} listName={listName}/>
         })
         }
     </ScrollView>
@@ -189,5 +193,3 @@ const styles = StyleSheet.create({
 
     },
 })
-
-export default NewItem
