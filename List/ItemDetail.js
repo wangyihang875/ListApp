@@ -6,7 +6,17 @@ import {observer} from 'mobx-react/native'
 export default class ItemDetail extends Component {
     constructor() {
         super()
-        this.state = {}
+
+    }
+
+    updateTitle = (text) => {
+        const {todo} = this.props;
+        todo.title = text;
+    }
+
+    updateRemark = (text) => {
+        const {todo} = this.props;
+        todo.remark = text;
     }
 
     render() {
@@ -21,13 +31,16 @@ export default class ItemDetail extends Component {
                 </View>
 
                 <View>
-                    <Text>标题</Text>
-                    <TextInput style={{height: 40, borderColor: 'gray', borderWidth: 1}}>{todo.title}</TextInput>
+
+                    <TextInput style={styles.input} placeholder="添加标题" placeholderTextColor="#bbbbbb"
+                               onChangeText={(text) => this.updateTitle(text)}>{todo.title}</TextInput>
                 </View>
 
                 <View>
-                    <Text>描述</Text>
-                    <TextInput style={{height: 40, borderColor: 'gray', borderWidth: 1}}>{todo.remark}</TextInput>
+
+                    <TextInput style={styles.inputMulti} multiline={true}
+                               numberOfLines={10} placeholder="添加备注" placeholderTextColor="#bbbbbb"
+                               onChangeText={(text) => this.updateRemark(text)}>{todo.remark}</TextInput>
                 </View>
 
 
@@ -43,35 +56,23 @@ const NoList = () => (
 )
 
 const styles = StyleSheet.create({
-    itemContainer: {
+    input: {
+        height: 50,
+        borderColor: '#bbbbbb',
         borderBottomWidth: 1,
-        borderBottomColor: '#ededed',
-        flexDirection: 'row'
+        marginLeft: 20,
+        fontSize: 20,
+        color: '#666666'
     },
-    item: {
-        color: '#156e9a',
-        fontSize: 18,
-        flex: 3,
-        padding: 20
+
+    inputMulti: {
+        marginTop: 10,
+        textAlignVertical: 'top',
+        marginLeft: 20,
+        fontSize: 20,
+        color: '#666666'
     },
-    deleteItem: {
-        flex: 1,
-        padding: 20,
-        color: '#a3a3a3',
-        fontWeight: 'bold',
-        marginTop: 3
-    },
-    button: {
-        height: 70,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderTopWidth: 1,
-        borderTopColor: '#156e9a'
-    },
-    buttonText: {
-        color: '#156e9a',
-        fontWeight: 'bold'
-    },
+
     heading: {
         height: 80,
         justifyContent: 'center',
@@ -82,21 +83,6 @@ const styles = StyleSheet.create({
     headingText: {
         color: '#156e9a',
         fontWeight: 'bold'
-    },
-    input: {
-        height: 70,
-        backgroundColor: '#f2f2f2',
-        padding: 20,
-        color: '#156e9a'
-    },
-    noList: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    noListText: {
-        fontSize: 22,
-        color: '#156e9a'
     },
     closeButton: {
         position: 'absolute',

@@ -50,8 +50,8 @@ class TodoItem extends Component {
         const {todo} = this.props;
         var imgSrc = todo.done?require('./images/done.png'):require('./images/undone.png')
         return (
-            <View style={{flexDirection:'row',alignItems:'center',paddingHorizontal:10}}>
-                <TouchableOpacity onPress={this.changeStatus} style={{marginLeft:10}}><Image source={imgSrc} style={{width:20,height:20}}/></TouchableOpacity>
+            <View style={{flexDirection:'row',alignItems:'center',paddingRight:10}}>
+                <TouchableOpacity onPress={this.changeStatus} style={{paddingHorizontal: 20}}><Image source={imgSrc} style={{width:20,height:20}}/></TouchableOpacity>
                 <Text
                     style={[styles.item, todo.done && styles.done]}
                     onPress={this.forDetail}
@@ -177,9 +177,8 @@ const styles = StyleSheet.create({
     },
     item: {
         color: '#156e9a',
-        padding: 10,
         fontSize: 20,
-        paddingLeft: 20
+        paddingVertical:10
     },
     done: {
         color: 'gray',

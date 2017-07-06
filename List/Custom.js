@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Text, TextInput, TouchableHighlight, ScrollView, StyleSheet,Alert} from 'react-native'
+import {View, Text, TextInput, TouchableHighlight,TouchableOpacity, ScrollView, StyleSheet, Alert, Image} from 'react-native'
 import {observer} from 'mobx-react/native'
 import NewItem from './NewItem'
 import ObservableRWListStore from './mobx/RWListStore';
@@ -22,7 +22,7 @@ class TodoList extends Component {
         var name = this.state.text;
         var listItemNo = Date.now();
         var createDate = Date.now();
-        this.props.store.addListItemUseStore(name,new ObservableRWListStore(),listItemNo, createDate);
+        this.props.store.addListItemUseStore(name, new ObservableRWListStore(), listItemNo, createDate);
         this.setState({
             text: '',
             showInput: !this.state.showInput
@@ -32,12 +32,16 @@ class TodoList extends Component {
     removeListItem(listItem) {
         Alert.alert(
             '提示',
-            '确定要删除 '+listItem.name+' 吗？',
+            '确定要删除 ' + listItem.name + ' 吗？',
             [
-                {text: '取消', onPress: () => {return false}},
+                {
+                    text: '取消', onPress: () => {
+                    return false
+                }
+                },
                 {text: '删除', onPress: () => this.props.store.removeListItem(listItem)},
             ],
-            { cancelable: true }
+            {cancelable: true}
         )
 
     }
@@ -53,7 +57,7 @@ class TodoList extends Component {
             params: {
                 item,
                 store: this.props.store,
-                RWListStore:item.items
+                RWListStore: item.items
             }
         })
     }
@@ -69,14 +73,12 @@ class TodoList extends Component {
                 {!QDList.length ? <NoList /> : null}
                 <ScrollView style={{flex:1}}>
                     {QDList.map((l, i) => {
-                        return <View key={i} style={styles.itemContainer}>
-                            <Text
-                                style={styles.item}
-                                onPress={this.addItemToList.bind(this, l)}>{l.name}</Text>
-                            <Text
-                                style={styles.deleteItem}
-                                onPress={this.removeListItem.bind(this, l)}>删除</Text>
-                        </View>
+                        return <TouchableOpacity key={i} style={styles.itemContainer} onPress={this.addItemToList.bind(this, l)}
+                                     onLongPress={this.removeListItem.bind(this, l)}>
+                            <Image source={require('./images/list.png')} style={{width:20,height:20}}/>
+                            <Text style={styles.item}>{l.name}</Text>
+                            <Text style={styles.sumItem}>{l.items.RWList.length}</Text>
+                        </TouchableOpacity>
                     })}
                 </ScrollView>
                 <TouchableHighlight
@@ -88,7 +90,7 @@ class TodoList extends Component {
                     style={styles.button}>
                     <Text style={styles.buttonText}>
                         {this.state.text === '' && '+ 新建清单'}
-                        {this.state.text !== '' && '+ 新建任务'}
+                        {this.state.text !== '' && '+ 添加清单'}
                     </Text>
                 </TouchableHighlight>
                 {showInput && <TextInput
@@ -107,9 +109,11 @@ const NoList = () => (
 
 const styles = StyleSheet.create({
     itemContainer: {
+        paddingLeft: 20,
         borderBottomWidth: 1,
         borderBottomColor: '#ededed',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        alignItems: 'center'
     },
     item: {
         color: '#156e9a',
@@ -117,7 +121,7 @@ const styles = StyleSheet.create({
         flex: 3,
         padding: 20
     },
-    deleteItem: {
+    sumItem: {
         flex: 1,
         padding: 20,
         color: '#a3a3a3',
