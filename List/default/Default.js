@@ -2,7 +2,7 @@ import React, {PropTypes, Component} from 'react'
 import {View, Text, StyleSheet, TextInput, TouchableHighlight, TouchableOpacity, ScrollView,Alert} from 'react-native'
 import {observable} from 'mobx';
 import {observer} from 'mobx-react/native';
-import  Todo from './mobx/TodoStore';
+import  Todo from '../mobx/TodoStore';
 
 @observer
 class TodoItem extends Component {
@@ -60,7 +60,7 @@ class NewItem extends Component {
 
     addItemToList() {
         if (this.state.newItem === '') return
-        this.props.store.addItem(new Todo(this.state.newItem))
+        this.props.store.addItem(new Todo(this.state.newItem,new Date()))
         this.setState({
             newItem: ''
         })

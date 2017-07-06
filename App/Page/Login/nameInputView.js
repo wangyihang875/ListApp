@@ -14,7 +14,7 @@ import {observer} from 'mobx-react/native'
 @observer
 export default class NameInputView extends Component {
     _onChangeText(text){
-        //const {userCode} = this.props.store;
+        //const {userCode} = this.props.mobx;
         this.props.store.userCode = text;
     }
 

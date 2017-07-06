@@ -2,7 +2,8 @@ import React, {Component} from 'react'
 import {View, Text, TextInput, TouchableHighlight,TouchableOpacity, ScrollView, StyleSheet, Alert, Image} from 'react-native'
 import {observer} from 'mobx-react/native'
 import NewItem from './NewItem'
-import ObservableRWListStore from './mobx/RWListStore';
+import ObservableRWListStore from '../mobx/RWListStore';
+import Icon from 'react-native-vector-icons/Ionicons'
 
 @observer
 class TodoList extends Component {
@@ -75,7 +76,7 @@ class TodoList extends Component {
                     {QDList.map((l, i) => {
                         return <TouchableOpacity key={i} style={styles.itemContainer} onPress={this.addItemToList.bind(this, l)}
                                      onLongPress={this.removeListItem.bind(this, l)}>
-                            <Image source={require('./images/list.png')} style={{width:20,height:20}}/>
+                            <Icon name="md-menu" size={32} color='#156e9a'/>
                             <Text style={styles.item}>{l.name}</Text>
                             <Text style={styles.sumItem}>{l.items.RWList.length}</Text>
                         </TouchableOpacity>

@@ -15,8 +15,9 @@ export default class TodoStore {
     @observable
     endDate = '';
 
-    constructor(title) {
+    constructor(title,endDate) {
         this.title = title;
+        this.endDate = endDate;
     }
 
 }

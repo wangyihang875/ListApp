@@ -1,12 +1,15 @@
-import React, {Component} from 'react'
-import {View, Text, TextInput, TouchableHighlight, ScrollView, StyleSheet, Alert} from 'react-native'
-import {observer} from 'mobx-react/native'
+import React, {Component} from 'react';
+import {View, Text, TextInput, TouchableHighlight, ScrollView, StyleSheet, Alert} from 'react-native';
+import {observer} from 'mobx-react/native';
+import DatePicker from 'react-native-datepicker';
 
 @observer
 export default class ItemDetail extends Component {
-    constructor() {
-        super()
-
+    constructor(props) {
+        super(props)
+        this.state = {
+            endDate: props.todo.endDate,
+        }
     }
 
     updateTitle = (text) => {
@@ -17,6 +20,12 @@ export default class ItemDetail extends Component {
     updateRemark = (text) => {
         const {todo} = this.props;
         todo.remark = text;
+    }
+
+    onDateChangeHandler = (date)=>{
+        const {todo} = this.props;
+        this.setState({endDate:date});
+        todo.endDate = date;
     }
 
     render() {
@@ -34,6 +43,33 @@ export default class ItemDetail extends Component {
 
                     <TextInput style={styles.input} placeholder="添加标题" placeholderTextColor="#bbbbbb"
                                onChangeText={(text) => this.updateTitle(text)}>{todo.title}</TextInput>
+                </View>
+
+                <View style={styles.date}>
+                    <DatePicker
+                        style={{width: 200}}
+                        date={this.state.endDate}
+                        mode="date"
+                        placeholder="请选择任务结束日期"
+                        format="YYYY-MM-DD"
+                        minDate={new Date()}
+                        maxDate="2099-12-31"
+                        confirmBtnText="Confirm"
+                        cancelBtnText="Cancel"
+                        customStyles={{
+                      dateInput: {
+                              position:'absolute',
+                              borderWidth:0,
+                              left:50
+                          },
+                          dateTouchBody:{
+
+                              alignItems:'center',
+                              justifyContent:'flex-start'
+                          }
+                    }}
+                        onDateChange={this.onDateChangeHandler}
+                    />
                 </View>
 
                 <View>
@@ -63,6 +99,14 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         fontSize: 20,
         color: '#666666'
+    },
+
+    date:{
+        borderColor: '#bbbbbb',
+        borderBottomWidth: 1,
+        marginLeft: 20,
+        paddingVertical:10,
+
     },
 
     inputMulti: {

@@ -13,7 +13,7 @@ import {observer} from 'mobx-react/native'
 @observer
 export default class PasswdInputView extends Component {
     _onChangeText(text){
-        //const {userCode} = this.props.store;
+        //const {userCode} = this.props.mobx;
         this.props.store.passwd = text;
     }
   render(){

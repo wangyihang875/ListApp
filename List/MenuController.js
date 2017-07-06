@@ -12,8 +12,8 @@ import {
     Navigator,
     StyleSheet
 } from 'react-native';
-import Custom from './Custom';
-import Default from './Default';
+import Custom from './custom/Custom';
+import Default from './default/Default';
 import AppMenu from './AppMenu'
 import QDListStore from './mobx/QDListStore'
 import DefaultRWListStore from './mobx/DefaultRWListStore'
