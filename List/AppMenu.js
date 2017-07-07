@@ -38,15 +38,15 @@ export default class AppMenu extends Component {
                     </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.btnView}>
+                <TouchableOpacity style={styles.btnView} onPress={() => this.props.onItemSelected('Process')}>
                     <Text style={styles.btn}>
-                        状态清单
+                        流程清单
                     </Text>
                 </TouchableOpacity>
 
                 <View style={[styles.btnView,{borderBottomWidth:0}]}>
                     <Text style={styles.btn}>
-                        流程清单
+                        状态清单
                     </Text>
                 </View>
 

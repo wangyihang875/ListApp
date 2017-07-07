@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import Custom from './custom/Custom';
 import Default from './default/Default';
+import Activity from './process/Activity';
 import AppMenu from './AppMenu'
 import QDListStore from './mobx/QDListStore'
 import DefaultRWListStore from './mobx/DefaultRWListStore'
@@ -39,6 +40,9 @@ export default class MenuController extends Component {
                 break;
             case 'Default' :
                 return <Default store={DefaultRWListStore} navigator={this.props.navigator}/>
+                break;
+            case 'Process' :
+                return <Activity navigator={this.props.navigator}/>
                 break;
             case 'Welcome' :
                 return <Welcome/>
