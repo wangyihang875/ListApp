@@ -1,24 +1,22 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
     AppRegistry,
     StyleSheet,
     Text,
-    View
+    View,
+    TextInput
 } from 'react-native';
 
 
 export default class Activity extends Component {
+
+
     render() {
         return (
             <View style={{flex:1,backgroundColor:'#ffffff'}}>
                 <View style={styles.heading}>
                     <Text style={styles.headingText}>待处理活动列表</Text>
                 </View>
-
-
-
-
-
 
 
             </View>

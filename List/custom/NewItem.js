@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
         height: 70,
         backgroundColor: '#ededed',
         padding: 20,
-        flex: 1
+        flex: 1,
     },
     button: {
         width: 70,
